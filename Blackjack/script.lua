@@ -1,3 +1,4 @@
+local ruleisrunned = false
 local menu = true
 local userFirstCard = math.random(1, 11)
 local userSecondCard = math.random(1, 11)
@@ -8,6 +9,7 @@ local dealerTotalCard = 0
 local dealerFirstCardevent = false;
 
 function Rules()
+    ruleisrunned = true
     if userTotalCard > 21 then
         print("You lose. Your cards exceed 21.")
         menu = false
@@ -35,13 +37,14 @@ function Inputs()
     local choice = io.read()
     if choice == "hit" then
         userTotalCard = userTotalCard + math.random(1, 11)
-        if dealerTotalCard < 16 and userTotalCard < 21 then
+        if dealerTotalCard <= 16 and userTotalCard <= 21 then
             dealerSecondCard = dealerSecondCard + math.random(1, 11)
         end
         if dealerFirstCardevent == false then
             dealerTotalCard = dealerFirstCard + dealerSecondCard
             dealerFirstCardevent = true
-        elseif dealerFirstCardevent == true then
+        end
+        if dealerFirstCardevent == true then
             dealerTotalCard = dealerTotalCard + dealerSecondCard
         end
         print("Dealer cards: " .. dealerTotalCard)
@@ -69,7 +72,6 @@ function Inputs()
                 menu = false
             end
         end
-        print("Dealer cards: " .. dealerTotalCard)
         Rules()
     elseif choice == "exit" then
         print("Thanks for playing!")
@@ -85,5 +87,7 @@ print("Dealer first card: " .. dealerFirstCard)
 while menu do
     print("Your current cards: " .. userTotalCard)
     Rules()
-    Inputs()
+    if ruleisrunned == true then
+        Inputs()
+    end
 end
