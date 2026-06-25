@@ -64,7 +64,7 @@ function Inputs()
                 print("Your cards: " .. userTotalCard)
                 print("Dealer cards: " .. dealerTotalCard)
                 menu = false
-            elseif dealerTotalCard > userTotalCard and (dealerTotalCard <= 21 and userTotalCard ~= 21) then
+            elseif dealerTotalCard > userTotalCard and (dealerTotalCard <= 21 and dealerTotalCard ~= 21) then
                 print("You lose.")
                 print("Your cards: " .. userTotalCard)
                 print("Dealer cards: " .. dealerTotalCard)
