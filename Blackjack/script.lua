@@ -46,7 +46,7 @@ function Inputs()
         if dealerFirstCardevent == false then
             dealerTotalCard = dealerFirstCard + dealerSecondCard
             dealerFirstCardevent = true
-        elseif dealerFirstCardevent == true then
+        elseif dealerFirstCardevent == true and dealerTotalCard <= 16 then
             dealerTotalCard = dealerTotalCard + dealerExtraCards
         end
         if dealerTotalCard <= 21 then
@@ -64,12 +64,12 @@ function Inputs()
                 print("Your cards: " .. userTotalCard)
                 print("Dealer cards: " .. dealerTotalCard)
                 menu = false
-            elseif dealerTotalCard > userTotalCard and dealerTotalCard <= 21 then
+            elseif dealerTotalCard > userTotalCard and (dealerTotalCard <= 21 and userTotalCard ~= 21) then
                 print("You lose.")
                 print("Your cards: " .. userTotalCard)
                 print("Dealer cards: " .. dealerTotalCard)
                 menu = false
-            elseif dealerTotalCard < userTotalCard and userTotalCard <= 21 then
+            elseif dealerTotalCard < userTotalCard and (userTotalCard <= 21 and userTotalCard ~= 21) then
                 print("You win!")
                 print("Your cards: " .. userTotalCard)
                 print("Dealer cards: " .. dealerTotalCard)
