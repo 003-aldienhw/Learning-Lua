@@ -5,6 +5,7 @@ local userTotalCard = userFirstCard + userSecondCard
 local dealerFirstCard = math.random(1, 11)
 local dealerSecondCard = 0
 local dealerTotalCard = 0
+local dealerFirstCardevent = false;
 
 function Rules()
     if userTotalCard > 21 then
@@ -34,8 +35,15 @@ function Inputs()
     local choice = io.read()
     if choice == "hit" then
         userTotalCard = userTotalCard + math.random(1, 11)
-        dealerSecondCard = dealerSecondCard + math.random(1, 11)
-        dealerTotalCard = dealerFirstCard + dealerSecondCard
+        if dealerTotalCard < 16 and userTotalCard < 21 then
+            dealerSecondCard = dealerSecondCard + math.random(1, 11)
+        end
+        if dealerFirstCardevent == false then
+            dealerTotalCard = dealerFirstCard + dealerSecondCard
+            dealerFirstCardevent = true
+        elseif dealerFirstCardevent == true then
+            dealerTotalCard = dealerTotalCard + dealerSecondCard
+        end
         print("Dealer cards: " .. dealerTotalCard)
         Rules()
     elseif choice == "stay" then
@@ -49,18 +57,19 @@ function Inputs()
                 print("Your cards: " .. userTotalCard)
                 print("Dealer cards: " .. dealerTotalCard)
                 menu = false
-            elseif dealerTotalCard > userTotalCard then
+            elseif dealerTotalCard > userTotalCard and dealerTotalCard <= 21 then
                 print("You lose.")
                 print("Your cards: " .. userTotalCard)
                 print("Dealer cards: " .. dealerTotalCard)
                 menu = false
-            elseif dealerTotalCard < userTotalCard then
+            elseif dealerTotalCard < userTotalCard and userTotalCard <= 21 then
                 print("You win!")
                 print("Your cards: " .. userTotalCard)
                 print("Dealer cards: " .. dealerTotalCard)
                 menu = false
             end
         end
+        print("Dealer cards: " .. dealerTotalCard)
         Rules()
     elseif choice == "exit" then
         print("Thanks for playing!")
