@@ -1,15 +1,22 @@
-local ruleisrunned = false
+math.randomseed(os.time())
+
 local menu = true
 local userFirstCard = math.random(1, 11)
 local userSecondCard = math.random(1, 11)
 local userTotalCard = userFirstCard + userSecondCard
 local dealerFirstCard = math.random(1, 11)
-local dealerSecondCard = 0
+local dealerSecondCard = math.random(1, 11)
 local dealerTotalCard = 0
-local dealerFirstCardevent = false;
+local dealerExtraCards = 0
+local dealerFirstCardevent = false
 
 function Rules()
-    ruleisrunned = true
+    if userTotalCard > 21 and (userFirstCard == 11 or userSecondCard == 11) then
+        userTotalCard = userTotalCard - 10
+    elseif dealerTotalCard > 21 and (dealerFirstCard == 11 or dealerSecondCard == 11) then
+        dealerTotalCard = dealerTotalCard - 10
+    end
+
     if userTotalCard > 21 then
         print("You lose. Your cards exceed 21.")
         menu = false
@@ -25,10 +32,6 @@ function Rules()
         print("Dealer cards: " .. dealerTotalCard)
         print("Your cards: " .. userTotalCard)
         menu = false
-    elseif userTotalCard > 21 and (userFirstCard == 11 or userSecondCard == 11) then
-        userTotalCard = userTotalCard - 10
-    elseif dealerTotalCard > 21 and (dealerFirstCard == 11 or dealerSecondCard == 11) then
-        dealerTotalCard = dealerTotalCard - 10
     end
 end
 
@@ -38,21 +41,22 @@ function Inputs()
     if choice == "hit" then
         userTotalCard = userTotalCard + math.random(1, 11)
         if dealerTotalCard <= 16 and userTotalCard <= 21 then
-            dealerSecondCard = dealerSecondCard + math.random(1, 11)
+            dealerExtraCards = dealerSecondCard + math.random(1, 11)
         end
         if dealerFirstCardevent == false then
             dealerTotalCard = dealerFirstCard + dealerSecondCard
             dealerFirstCardevent = true
+        elseif dealerFirstCardevent == true then
+            dealerTotalCard = dealerTotalCard + dealerExtraCards
         end
-        if dealerFirstCardevent == true then
-            dealerTotalCard = dealerTotalCard + dealerSecondCard
+        if dealerTotalCard <= 21 then
+            print("Dealer cards: " .. dealerTotalCard)
         end
-        print("Dealer cards: " .. dealerTotalCard)
         Rules()
     elseif choice == "stay" then
         while dealerTotalCard <= 16 do
-            dealerSecondCard = dealerSecondCard + math.random(1, 11)
-            dealerTotalCard = dealerTotalCard + dealerSecondCard
+            dealerExtraCards = dealerSecondCard + math.random(1, 11)
+            dealerTotalCard = dealerTotalCard + dealerExtraCards
         end
         if dealerTotalCard > 16 then
             if dealerTotalCard == userTotalCard then
@@ -83,11 +87,9 @@ function Inputs()
 end
 
 print("Dealer first card: " .. dealerFirstCard)
+Rules()
 
 while menu do
     print("Your current cards: " .. userTotalCard)
-    Rules()
-    if ruleisrunned == true then
-        Inputs()
-    end
+    Inputs()
 end
