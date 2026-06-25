@@ -18,25 +18,27 @@ function Rules()
     end
 
     if userTotalCard > 21 then
+        print("\nYour cards: " .. userTotalCard)
         print("You lose. Your cards exceed 21.")
         menu = false
     elseif dealerTotalCard > 21 then
+        print("\nDealer cards: " .. dealerTotalCard)
         print("You win! Dealer busts!")
         menu = false
     elseif userTotalCard == 21 then
+        print("\nYour cards: " .. userTotalCard)
         print("You win! You very lucky!")
-        print("Your cards: " .. userTotalCard)
         menu = false
     elseif dealerTotalCard == 21 then
-        print("You lose! Dealer got lucky!")
-        print("Dealer cards: " .. dealerTotalCard)
+        print("\nDealer cards: " .. dealerTotalCard)
         print("Your cards: " .. userTotalCard)
+        print("You lose! Dealer got lucky!")
         menu = false
     end
 end
 
 function Inputs()
-    io.write("Hit or stay?: ")
+    io.write("Hit or stand?: ")
     local choice = io.read()
     if choice == "hit" then
         userTotalCard = userTotalCard + math.random(1, 11)
@@ -53,26 +55,26 @@ function Inputs()
             print("Dealer cards: " .. dealerTotalCard)
         end
         Rules()
-    elseif choice == "stay" then
+    elseif choice == "stand" then
         while dealerTotalCard <= 16 do
             dealerExtraCards = dealerSecondCard + math.random(1, 11)
             dealerTotalCard = dealerTotalCard + dealerExtraCards
         end
         if dealerTotalCard > 16 then
             if dealerTotalCard == userTotalCard then
-                print("Draw!")
-                print("Your cards: " .. userTotalCard)
+                print("\nYour cards: " .. userTotalCard)
                 print("Dealer cards: " .. dealerTotalCard)
+                print("Draw!")
                 menu = false
             elseif dealerTotalCard > userTotalCard and (dealerTotalCard <= 21 and dealerTotalCard ~= 21) then
-                print("You lose.")
-                print("Your cards: " .. userTotalCard)
+                print("\nYour cards: " .. userTotalCard)
                 print("Dealer cards: " .. dealerTotalCard)
+                print("You lose.")
                 menu = false
             elseif dealerTotalCard < userTotalCard and (userTotalCard <= 21 and userTotalCard ~= 21) then
-                print("You win!")
-                print("Your cards: " .. userTotalCard)
+                print("\nYour cards: " .. userTotalCard)
                 print("Dealer cards: " .. dealerTotalCard)
+                print("You win!")
                 menu = false
             end
         end
