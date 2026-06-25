@@ -38,6 +38,12 @@ function Rules()
 end
 
 function Inputs()
+    if dealerTotalCard < userTotalCard and dealerTotalCard > 16 then
+        print("\nYour cards: " .. userTotalCard)
+        print("Dealer cards: " .. dealerTotalCard)
+        print("You win!")
+        menu = false
+    end
     io.write("Hit or stand?: ")
     local choice = io.read()
     if choice == "hit" then
