@@ -52,6 +52,23 @@ function Rules()
             print("You win!")
             menu = false
         end
+    elseif dealerTotalCard > 16 and dealerTotalCard < userTotalCard then
+        if dealerTotalCard == userTotalCard then
+            print("\nYour cards: " .. userTotalCard)
+            print("Dealer cards: " .. dealerTotalCard)
+            print("Draw!")
+            menu = false
+        elseif dealerTotalCard > userTotalCard and dealerTotalCard <= 21 then
+            print("\nYour cards: " .. userTotalCard)
+            print("Dealer cards: " .. dealerTotalCard)
+            print("You lose.")
+            menu = false
+        elseif dealerTotalCard < userTotalCard and userTotalCard <= 21 then
+            print("\nYour cards: " .. userTotalCard)
+            print("Dealer cards: " .. dealerTotalCard)
+            print("You win!")
+            menu = false
+        end
     end
 end
 
