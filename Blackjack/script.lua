@@ -72,7 +72,11 @@ function Rules()
     end
 end
 
-function Inputs()
+Rules()
+print("Dealer first card: " .. dealerFirstCard)
+
+while menu do
+    print("Your current cards: " .. userTotalCard)
     Rules()
     io.write("Hit or stand?: ")
     local choice = io.read()
@@ -103,14 +107,5 @@ function Inputs()
         menu = false
     else
         print("Choose the right one!")
-        Inputs()
     end
-end
-
-print("Dealer first card: " .. dealerFirstCard)
-Rules()
-
-while menu do
-    print("Your current cards: " .. userTotalCard)
-    Inputs()
 end
