@@ -52,7 +52,7 @@ function Rules()
             print("You win!")
             menu = false
         end
-    elseif dealerTotalCard > 16 and dealerTotalCard < userTotalCard then
+    elseif dealerTotalCard > 16 and (dealerTotalCard < userTotalCard or dealerTotalCard == userTotalCard) then
         if dealerTotalCard == userTotalCard then
             print("\nYour cards: " .. userTotalCard)
             print("Dealer cards: " .. dealerTotalCard)
@@ -76,8 +76,8 @@ Rules()
 print("Dealer first card: " .. dealerFirstCard)
 
 while menu do
-    print("Your current cards: " .. userTotalCard)
     Rules()
+    print("Your current cards: " .. userTotalCard)
     io.write("Hit or stand?: ")
     local choice = io.read()
     if choice == "hit" then
