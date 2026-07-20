@@ -1,82 +1,106 @@
 math.randomseed(os.time())
 
 local menu = true
-local userFirstCard = math.random(1, 11)
-local userSecondCard = math.random(1, 11)
-local userExtraCards = math.random(1, 11)
-local userTotalCard = userFirstCard + userSecondCard
+local userCards = {}
+local dealerCards = {}
 local userAce = 0
-local dealerFirstCard = math.random(1, 11)
-local dealerSecondCard = math.random(1, 11)
-local dealerExtraCards = math.random(1, 11)
-local dealerTotalCard = dealerFirstCard + dealerSecondCard
 local dealerAce = 0
 local dealerFirstCardEvent = false
 local standchoice = false
 
+function DrawCard()
+    return math.random(1, 11)
+end
+
+function CalculateTotal(t)
+    local total = 0
+    for key, value in pairs(t) do
+        if type(value) == "number" then
+            total = total + value
+        end
+    end
+    return total
+end
+
+table.insert(userCards, DrawCard())
+table.insert(userCards, DrawCard())
+table.insert(dealerCards, DrawCard())
+table.insert(dealerCards, DrawCard())
+
+local totalUserCards = CalculateTotal(userCards)
+local totalDealerCards = CalculateTotal(dealerCards)
+
 function Rules()
-    if userExtraCards == 11 then
-        userAce = userAce + 1
-    elseif dealerExtraCards == 11 then
-        dealerAce = dealerAce + 1
-    end
-    while userTotalCard > 21 and userAce > 0 do
-        userTotalCard = userTotalCard - 10
-        userAce = userAce - 1
-    end
-    while dealerTotalCard > 21 and dealerAce > 0 do
-        dealerTotalCard = dealerTotalCard - 10
-        dealerAce = dealerAce - 1
+    userAce = 0
+    for index, value in ipairs(userCards) do
+        if value == 11 then
+            userAce = userAce + 1
+        end
+        if totalUserCards > 21 and userAce > 0 then
+            totalUserCards = totalUserCards - 10
+            userAce = userAce - 1
+        end
     end
 
-    if userTotalCard > 21 then
-        print("\nYour cards: " .. userTotalCard)
+    dealerAce = 0
+    for index, value in ipairs(dealerCards) do
+        if value == 1 then
+            dealerAce = dealerAce + 1
+        end
+        if totalDealerCards > 21 and dealerAce > 0 then
+            totalDealerCards = totalDealerCards - 10
+            dealerAce = dealerAce - 1
+        end
+    end
+
+    if totalUserCards > 21 then
+        print("\nYour cards: " .. totalUserCards)
         print("You lose. Your cards exceed 21.")
         menu = false
-    elseif dealerTotalCard > 21 and dealerFirstCardEvent == true then
-        print("\nDealer cards: " .. dealerTotalCard)
+    elseif totalDealerCards > 21 and dealerFirstCardEvent == true then
+        print("\nDealer cards: " .. totalDealerCards)
         print("You win! Dealer busts!")
         menu = false
-    elseif userTotalCard == 21 then
-        print("\nYour cards: " .. userTotalCard)
+    elseif totalUserCards == 21 then
+        print("\nYour cards: " .. totalUserCards)
         print("You win! You very lucky!")
         menu = false
-    elseif dealerTotalCard == 21 and dealerFirstCardEvent == true then
-        print("\nDealer cards: " .. dealerTotalCard)
-        print("Your cards: " .. userTotalCard)
+    elseif totalDealerCards == 21 and dealerFirstCardEvent == true then
+        print("\nDealer cards: " .. totalDealerCards)
+        print("Your cards: " .. totalUserCards)
         print("You lose! Dealer got lucky!")
         menu = false
-    elseif dealerTotalCard > 16 and standchoice == true then
-        if dealerTotalCard == userTotalCard then
-            print("\nYour cards: " .. userTotalCard)
-            print("Dealer cards: " .. dealerTotalCard)
+    elseif totalDealerCards > 16 and standchoice == true then
+        if totalDealerCards == totalUserCards then
+            print("\nYour cards: " .. totalUserCards)
+            print("Dealer cards: " .. totalDealerCards)
             print("Draw!")
             menu = false
-        elseif dealerTotalCard > userTotalCard and dealerTotalCard <= 21 then
-            print("\nYour cards: " .. userTotalCard)
-            print("Dealer cards: " .. dealerTotalCard)
+        elseif totalDealerCards > totalUserCards and totalDealerCards <= 21 then
+            print("\nYour cards: " .. totalUserCards)
+            print("Dealer cards: " .. totalDealerCards)
             print("You lose.")
             menu = false
-        elseif dealerTotalCard < userTotalCard and userTotalCard <= 21 then
-            print("\nYour cards: " .. userTotalCard)
-            print("Dealer cards: " .. dealerTotalCard)
+        elseif totalDealerCards < totalUserCards and totalUserCards <= 21 then
+            print("\nYour cards: " .. totalUserCards)
+            print("Dealer cards: " .. totalDealerCards)
             print("You win!")
             menu = false
         end
-    elseif dealerTotalCard > 16 and (dealerTotalCard < userTotalCard or dealerTotalCard == userTotalCard) then
-        if dealerTotalCard == userTotalCard then
-            print("\nYour cards: " .. userTotalCard)
-            print("Dealer cards: " .. dealerTotalCard)
+    elseif totalDealerCards > 16 and (totalDealerCards < totalUserCards or totalDealerCards == totalUserCards) then
+        if totalDealerCards == totalUserCards then
+            print("\nYour cards: " .. totalUserCards)
+            print("Dealer cards: " .. totalDealerCards)
             print("Draw!")
             menu = false
-        elseif dealerTotalCard > userTotalCard and dealerTotalCard <= 21 then
-            print("\nYour cards: " .. userTotalCard)
-            print("Dealer cards: " .. dealerTotalCard)
+        elseif totalDealerCards > totalUserCards and totalDealerCards <= 21 then
+            print("\nYour cards: " .. totalUserCards)
+            print("Dealer cards: " .. totalDealerCards)
             print("You lose.")
             menu = false
-        elseif dealerTotalCard < userTotalCard and userTotalCard <= 21 then
-            print("\nYour cards: " .. userTotalCard)
-            print("Dealer cards: " .. dealerTotalCard)
+        elseif totalDealerCards < totalUserCards and totalUserCards <= 21 then
+            print("\nYour cards: " .. totalUserCards)
+            print("Dealer cards: " .. totalDealerCards)
             print("You win!")
             menu = false
         end
@@ -84,28 +108,31 @@ function Rules()
 end
 
 Rules()
-print("Dealer first card: " .. dealerFirstCard)
+print("Dealer first card: " .. dealerCards[1])
 
 while menu do
     Rules()
-    print("Your current cards: " .. userTotalCard)
+    print("Your current cards: " .. totalUserCards)
     io.write("Hit or stand?: ")
     local choice = io.read()
     if choice == "hit" then
         dealerFirstCardEvent = true
-        userTotalCard = userTotalCard + userExtraCards
-        if dealerTotalCard <= 16 and userTotalCard <= 21 then
-            dealerTotalCard = dealerTotalCard + dealerExtraCards
+        table.insert(userCards, DrawCard())
+        totalUserCards = CalculateTotal(userCards)
+        if totalDealerCards <= 16 and totalUserCards <= 21 then
+            table.insert(dealerCards, DrawCard())
+            totalDealerCards = CalculateTotal(dealerCards)
         end
-        if dealerTotalCard <= 21 then
-            print("Dealer cards: " .. dealerTotalCard)
+        if totalDealerCards <= 21 then
+            print("Dealer cards: " .. totalDealerCards)
         end
         Rules()
     elseif choice == "stand" then
         standchoice = true
         dealerFirstCardEvent = true
-        while dealerTotalCard <= 16 do
-            dealerTotalCard = dealerTotalCard + dealerExtraCards
+        while totalDealerCards <= 16 do
+            table.insert(dealerCards, DrawCard())
+            totalDealerCards = CalculateTotal(dealerCards)
         end
         Rules()
     elseif choice == "exit" then
