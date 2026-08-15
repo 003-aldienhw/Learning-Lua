@@ -1,6 +1,21 @@
 math.randomseed(os.time())
 
 local menu = true
+local deck = {
+    11, 11, 11, 11,
+    2, 2, 2, 2,
+    3, 3, 3, 3,
+    4, 4, 4, 4,
+    5, 5, 5, 5,
+    6, 6, 6, 6,
+    7, 7, 7, 7,
+    8, 8, 8, 8,
+    9, 9, 9, 9,
+    10, 10, 10, 10,
+    10, 10, 10, 10,
+    10, 10, 10, 10,
+    10, 10, 10, 10
+}
 local userCards = {}
 local dealerCards = {}
 local userAce = 0
@@ -9,7 +24,8 @@ local dealerFirstCardEvent = false
 local standchoice = false
 
 function DrawCard()
-    return math.random(1, 11)
+    local card = math.random(1, #deck)
+    return table.remove(deck, card)
 end
 
 function CalculateTotal(t)
