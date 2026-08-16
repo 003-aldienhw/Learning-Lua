@@ -20,7 +20,7 @@ local userCards = {}
 local dealerCards = {}
 local userAce = 0
 local dealerAce = 0
-local dealerFirstCardEvent = false
+local dealerRevealed = false
 local standchoice = false
 
 function DrawCard()
@@ -48,32 +48,34 @@ local totalDealerCards = CalculateTotal(dealerCards)
 
 function Rules()
     userAce = 0
-    for index, value in ipairs(userCards) do
+    for _, value in ipairs(userCards) do
         if value == 11 then
             userAce = userAce + 1
         end
-        if totalUserCards > 21 and userAce > 0 then
-            totalUserCards = totalUserCards - 10
-            userAce = userAce - 1
-        end
+    end
+
+    while totalUserCards > 21 and userAce > 0 do
+        totalUserCards = totalUserCards - 10
+        userAce = userAce - 1
     end
 
     dealerAce = 0
-    for index, value in ipairs(dealerCards) do
-        if value == 1 then
+    for _, value in ipairs(dealerCards) do
+        if value == 11 then
             dealerAce = dealerAce + 1
         end
-        if totalDealerCards > 21 and dealerAce > 0 then
-            totalDealerCards = totalDealerCards - 10
-            dealerAce = dealerAce - 1
-        end
+    end
+
+    while totalDealerCards > 21 and dealerAce > 0 do
+        totalDealerCards = totalDealerCards - 10
+        dealerAce = dealerAce - 1
     end
 
     if totalUserCards > 21 then
         print("\nYour cards: " .. totalUserCards)
         print("You lose. Your cards exceed 21.")
         menu = false
-    elseif totalDealerCards > 21 and dealerFirstCardEvent == true then
+    elseif totalDealerCards > 21 and dealerRevealed == true then
         print("\nDealer cards: " .. totalDealerCards)
         print("You win! Dealer busts!")
         menu = false
@@ -81,7 +83,7 @@ function Rules()
         print("\nYour cards: " .. totalUserCards)
         print("You win! You very lucky!")
         menu = false
-    elseif totalDealerCards == 21 and dealerFirstCardEvent == true then
+    elseif totalDealerCards == 21 and dealerRevealed == true then
         print("\nDealer cards: " .. totalDealerCards)
         print("Your cards: " .. totalUserCards)
         print("You lose! Dealer got lucky!")
@@ -132,20 +134,15 @@ while menu do
     io.write("Hit or stand?: ")
     local choice = io.read()
     if choice == "hit" then
-        dealerFirstCardEvent = true
         table.insert(userCards, DrawCard())
         totalUserCards = CalculateTotal(userCards)
-        if totalDealerCards <= 16 and totalUserCards <= 21 then
-            table.insert(dealerCards, DrawCard())
-            totalDealerCards = CalculateTotal(dealerCards)
-        end
         if totalDealerCards <= 21 then
             print("Dealer cards: " .. totalDealerCards)
         end
         Rules()
     elseif choice == "stand" then
         standchoice = true
-        dealerFirstCardEvent = true
+        dealerRevealed = true
         while totalDealerCards <= 16 do
             table.insert(dealerCards, DrawCard())
             totalDealerCards = CalculateTotal(dealerCards)
