@@ -93,28 +93,8 @@ function Rules()
         print("You lose! Dealer got lucky!")
         menu = false
         done = true
-    elseif totalDealerCards > 16 then
-        if standchoice == true then
-            if totalDealerCards == totalUserCards then
-                print("\nYour cards: " .. totalUserCards)
-                print("Dealer cards: " .. totalDealerCards)
-                print("Draw!")
-                menu = false
-                done = true
-            elseif totalDealerCards > totalUserCards and totalDealerCards <= 21 then
-                print("\nYour cards: " .. totalUserCards)
-                print("Dealer cards: " .. totalDealerCards)
-                print("You lose.")
-                menu = false
-                done = true
-            elseif totalDealerCards < totalUserCards and totalUserCards <= 21 then
-                print("\nYour cards: " .. totalUserCards)
-                print("Dealer cards: " .. totalDealerCards)
-                print("You win!")
-                menu = false
-                done = true
-            end
-        elseif totalDealerCards < totalUserCards or totalDealerCards == totalUserCards then
+    elseif totalDealerCards > 16 and dealerRevealed == true then
+        if standchoice == true or (totalDealerCards < totalUserCards or totalDealerCards == totalUserCards) then
             if totalDealerCards == totalUserCards then
                 print("\nYour cards: " .. totalUserCards)
                 print("Dealer cards: " .. totalDealerCards)
