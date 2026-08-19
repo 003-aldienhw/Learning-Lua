@@ -18,8 +18,6 @@ local deck = {
 }
 local userCards = {}
 local dealerCards = {}
-local userAce = 0
-local dealerAce = 0
 local dealerRevealed = false
 local standchoice = false
 
@@ -108,7 +106,7 @@ while menu do
         totalUserCards = CalculateTotal(userCards)
         Rules()
         if menu then
-            print("Dealer first card: " .. dealerCards[1])
+            print("\nDealer first card: " .. dealerCards[1])
         end
     elseif choice == "stand" or choice == "s" then
         standchoice = true
@@ -123,6 +121,6 @@ while menu do
         menu = false
     else
         print("Choose the right one!")
-        print("Dealer cards: " .. totalDealerCards)
+        print("Dealer first card: " .. dealerCards[1])
     end
 end
