@@ -108,7 +108,7 @@ while menu do
         totalUserCards = CalculateTotal(userCards)
         Rules()
         if menu then
-            print("Dealer cards: " .. totalDealerCards)
+            print("Dealer first card: " .. dealerCards[1])
         end
     elseif choice == "stand" or choice == "s" then
         standchoice = true
@@ -118,7 +118,7 @@ while menu do
             totalDealerCards = CalculateTotal(dealerCards)
         end
         Rules()
-    elseif choice == "exit" then
+    elseif choice == "exit" or choice == "q" then
         print("Thanks for playing!")
         menu = false
     else
