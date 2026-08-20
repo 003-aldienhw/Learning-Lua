@@ -97,18 +97,17 @@ if menu then
 end
 
 while menu do
-    Rules()
     print("Your current cards: " .. totalUserCards)
     io.write("Hit or stand?: ")
     local choice = io.read():lower()
-    if choice == "hit" or choice == "h" then
+    if choice == "hit" then
         table.insert(userCards, DrawCard())
         totalUserCards = CalculateTotal(userCards)
         Rules()
         if menu then
             print("\nDealer first card: " .. dealerCards[1])
         end
-    elseif choice == "stand" or choice == "s" then
+    elseif choice == "stand" then
         standchoice = true
         dealerRevealed = true
         while totalDealerCards <= 16 do
@@ -116,11 +115,11 @@ while menu do
             totalDealerCards = CalculateTotal(dealerCards)
         end
         Rules()
-    elseif choice == "exit" or choice == "q" then
-        print("Thanks for playing!")
+    elseif choice == "exit" then
+        print("\nThanks for playing!")
         menu = false
     else
-        print("Choose the right one!")
+        print("\nChoose the right one!")
         print("Dealer first card: " .. dealerCards[1])
     end
 end
